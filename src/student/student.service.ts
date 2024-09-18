@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { StudentDto } from './DTO/student-dto';
 
@@ -7,14 +8,25 @@ export class StudentService {
 
     // create student
 
-    createStudent(studentDTO:StudentDto){
+   async createStudent(studentDTO:StudentDto){
+
+        const hashPassword = await this.hashPassword(studentDTO.password);
+
         const newStudent = {
             id:Date.now(),
-            ...studentDTO
+            ...studentDTO,
+            password:hashPassword
         }
 
         this.students.push(newStudent);
         return newStudent;
+
+    }
+
+      // Helper function to hash the password
+    private async hashPassword(password:string): Promise<string>{
+        const saltRound = 7;
+        return await bcrypt.hash(password,saltRound);
     }
 
     // find all student
