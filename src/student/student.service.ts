@@ -8,14 +8,14 @@ export class StudentService {
 
     // create student
 
-   async createStudent(studentDTO:StudentDto){
+    async createStudent(studentDTO: StudentDto) {
 
         const hashPassword = await this.hashPassword(studentDTO.password);
 
         const newStudent = {
-            id:Date.now(),
+            id: Date.now(),
             ...studentDTO,
-            password:hashPassword
+            password: hashPassword
         }
 
         this.students.push(newStudent);
@@ -23,49 +23,52 @@ export class StudentService {
 
     }
 
-      // Helper function to hash the password
-    private async hashPassword(password:string): Promise<string>{
+    // Helper function to hash the password
+    private async hashPassword(password: string): Promise<string> {
         const saltRound = 7;
-        return await bcrypt.hash(password,saltRound);
+        return await bcrypt.hash(password, saltRound);
     }
 
     // find all student
-    getAllStundent(){
+    getAllStundent() {
         return this.students;
     }
 
     // Get a specific student by ID
 
-    findOneStudent(id:number){
-        const currentStudent = this.students.find(student=>student.id === id);
-        if(!currentStudent){
+    findOneStudent(id: number) {
+        const currentStudent = this.students.find(student => student.id === id);
+        if (!currentStudent) {
             throw new NotFoundException(`Student with ID ${id} not found`);
         }
 
         return currentStudent;
     }
 
-
+    // Method to find a student by email
+    async findByEmail(email: string) {
+        return this.students.find(student => student.email === email);
+    }
     // Update student
 
-    updateStudent(id:number, updateStudentDTO: Partial<StudentDto>){
-        const studentIndex = this.students.findIndex(student=>student.id === id);
-        if(studentIndex === -1){
+    updateStudent(id: number, updateStudentDTO: Partial<StudentDto>) {
+        const studentIndex = this.students.findIndex(student => student.id === id);
+        if (studentIndex === -1) {
 
             throw new NotFoundException(`Student with ID ${id} not found`);
         }
-        this.students[studentIndex] = {...this.students[studentIndex], ...updateStudentDTO};
+        this.students[studentIndex] = { ...this.students[studentIndex], ...updateStudentDTO };
         return this.students[studentIndex];
     }
 
     // Delete student
 
-    deleteStudent(id:number){
-        const studentIndex = this.students.findIndex(student=>student.id === id);
-        if(studentIndex === -1){
+    deleteStudent(id: number) {
+        const studentIndex = this.students.findIndex(student => student.id === id);
+        if (studentIndex === -1) {
             throw new NotFoundException(`Student with ID ${id} not found`)
         }
-        const removeStudent = this.students.splice(studentIndex,1);
+        const removeStudent = this.students.splice(studentIndex, 1);
         return removeStudent;
     }
 }
