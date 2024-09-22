@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { StudentModule } from './student/student.module';
 import { AddPrefixMiddleware } from './middleware/add-prefix.middleware';
 import { StudentController } from './student/student.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [StudentModule],
+  imports: [StudentModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
