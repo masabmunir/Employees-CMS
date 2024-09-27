@@ -4,9 +4,12 @@ import { AuthController } from './auth.controller';
 import { StudentModule } from 'src/student/student.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
+import { JwtService } from './jwt/jwt.service';
+import { PassportModule } from '@nestjs/passport';
+import { JwtAuthService } from './jwt-auth/jwt-auth.service';
 @Module({
   imports:[
+    PassportModule,
     JwtModule.registerAsync
     ({
       imports:[ConfigModule],
@@ -18,7 +21,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
     StudentModule  // Import student module to access the service
   ],
-  providers: [AuthService],
+  providers: [AuthService, JwtService, JwtAuthService],
   controllers: [AuthController]
 })
 export class AuthModule {}

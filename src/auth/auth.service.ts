@@ -3,7 +3,6 @@ import { StudentService } from 'src/student/student.service';
 import { JwtService } from '@nestjs/jwt';
 import { StudentDto } from 'src/student/DTO/student-dto';
 import * as bcrypt from 'bcrypt';
-import passport from 'passport';
 @Injectable()
 export class AuthService {
     constructor(private studentService: StudentService,
