@@ -8,7 +8,8 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot({
+  imports: [
+    ConfigModule.forRoot({
     isGlobal:true  // Make environment variables globally available
   }),
     StudentModule, AuthModule],

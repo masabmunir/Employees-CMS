@@ -12,7 +12,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       imports:[ConfigModule],
       inject:[ConfigService],
       useFactory: async(configService:ConfigService)=>({
-        secret: 
+        secret: configService.get<string>('JWT_SECRET'), // Use env variable for secret
+        signOptions: { expiresIn: configService.get<string>('JWT_EXPIRES_IN') }, // Use env variable for token expiration}
       })
     }),
     StudentModule  // Import student module to access the service
