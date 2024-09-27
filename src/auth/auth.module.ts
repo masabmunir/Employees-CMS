@@ -3,14 +3,19 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { StudentModule } from 'src/student/student.module';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports:[
-    JwtModule.register({
-      secret:'',
-      signOptions:{}
+    JwtModule.registerAsync
+    ({
+      imports:[ConfigModule],
+      inject:[ConfigService],
+      useFactory: async(configService:ConfigService)=>({
+        secret: 
+      })
     }),
-    StudentModule
+    StudentModule  // Import student module to access the service
   ],
   providers: [AuthService],
   controllers: [AuthController]

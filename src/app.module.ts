@@ -5,9 +5,13 @@ import { StudentModule } from './student/student.module';
 import { AddPrefixMiddleware } from './middleware/add-prefix.middleware';
 import { StudentController } from './student/student.controller';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [StudentModule, AuthModule],
+  imports: [ConfigModule.forRoot({
+    isGlobal:true  // Make environment variables globally available
+  }),
+    StudentModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
