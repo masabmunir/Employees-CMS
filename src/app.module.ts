@@ -10,7 +10,8 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-    isGlobal:true  // Make environment variables globally available
+    expandVariables: true,
+    isGlobal:true,  // Make environment variables globally available
   }),
     StudentModule, AuthModule],
   controllers: [AppController],
