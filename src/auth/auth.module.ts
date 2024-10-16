@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtAuthService } from './jwt-auth/jwt-auth.service';
+import { RoleGuard } from './role/role.guard';
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
@@ -20,7 +21,7 @@ import { JwtAuthService } from './jwt-auth/jwt-auth.service';
     }),
     StudentModule, // Import student module to access the service
   ],
-  providers: [AuthService, JwtStrategy, JwtAuthService], // Include JwtStrategy and JwtAuthService as providers
+  providers: [AuthService, JwtStrategy, JwtAuthService,RoleGuard], // Include JwtStrategy and JwtAuthService as providers
   controllers: [AuthController],
 })
 

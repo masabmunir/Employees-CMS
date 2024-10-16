@@ -3,6 +3,8 @@ import { StudentService } from 'src/student/student.service';
 import { JwtService } from '@nestjs/jwt';
 import { StudentDto } from 'src/student/DTO/student-dto';
 import * as bcrypt from 'bcrypt';
+import { Role } from './role/role.enum';
+
 @Injectable()
 export class AuthService {
     constructor(private studentService: StudentService,
@@ -30,7 +32,7 @@ export class AuthService {
             throw new UnauthorizedException('Invalid email or password');
           }
 
-          const payload = {email:student.email, sub:student.id};
+          const payload = {email:student.email, sub:student.id, roles:[Role.User]};
           return{
             access_token:this.jwtService.sign(payload)
           }

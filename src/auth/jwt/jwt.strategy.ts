@@ -11,8 +11,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     console.log("jwtSecret", jwtSecret);
 
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // JWT is extracted from the Authorization header
-      ignoreExpiration: false, // Ignore expired tokens
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
       secretOrKey:jwtSecret // Make sure JWT_SECRET is fetched from env
     });
 
